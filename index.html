@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;700;800&family=Ubuntu:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <title>Pre-Entrega #3</title>
+
+</head>
+
+<body>
+  <main id="contenedor">
+    <section id="principal">
+      <div id="pasos">
+        <img src="images/bg-sidebar-desktop.svg" alt="imagen menu">
+        <div id="info">
+          <div class="numeros">
+            <p id="numero1" class="numero activado">1</p>
+            <div>
+              <h5>PASO 1</h5>
+              <h4>Tu Informacion</h4>
+            </div>
+          </div>
+          <div class="numeros">
+            <p id="numero2" class="numero">2</p>
+            <div>
+              <h5>PASO 2</h5>
+              <h4>Elegir Plan</h4>
+            </div>
+          </div>
+          <div class="numeros">
+            <p id="numero3" class="numero">3</p>
+            <div>
+              <h5>PASO 3</h5>
+              <h4>Resumen</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section id="paso1">
+        <h2 class='titulo'>Informacion personal</h2>
+        <p class='parrafo'>por favor ingresar tu nombre, correo electronico y tu numero telefonico.</p>
+        <form id="formulario">
+          <div class="inputs">
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" id="nombre" placeholder="e.g. Stephen King" required>
+          </div>
+
+          <div class="inputs">
+            <label for="email">Correo Electronico</label>
+            <input type="email" name="email" id="email" placeholder="e.g. stephenking@lorem.com" required>
+          </div>
+
+          <div class="inputs">
+            <label for="telefono">Numero Telefonico</label>
+            <input type="tel" name="telefono" id="telefono" placeholder="e.g. 234 567 890" required>
+          </div>
+
+        </form>
+        <button class="btn">Siguiente Paso</button>
+      </section>
+
+      <section id="paso2" class="quitar">
+        <h2 class="titulo">Selecciona tu plan</h2>
+        <p class="parrafo">Tienes la opcion de pago mensual o anual</p>
+        <div class="planes">
+          <div class="contenedor-planes">
+            <input type="radio" name="plan" id="arcade" class="checkbox" checked>
+            <img src="images/icon-arcade.svg" alt="logo arcade">
+            <div>
+              <h1> Arcade </h1>
+              <p id="arcade-precio" class="parrafo">$9/mes</p>
+            </div>
+          </div>
+          <div class="contenedor-planes">
+            <input type="radio" name="plan" id="advanced" class="checkbox">
+            <img src="images/icon-advanced.svg" alt="logo avanzadp">
+            <div>
+              <h1> Avanzado </h1>
+              <p id="avanzado-precio" class="parrafo">$12/mes</p>
+            </div>
+          </div>
+          <div class="contenedor-planes">
+            <input type="radio" name="plan" id="pro" class="checkbox">
+            <img src="images/icon-pro.svg" alt="logo pro">
+            <div>
+              <h1> Pro </h1>
+              <p id="pro-precio" class="parrafo">$15/mes</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="duracion">
+          <span id="mensual" class="prendido">Mensual</span>
+          <input type="checkbox" name="duracion-btn" id="duracion-btn">
+          <span id="anual">Anual</span>
+        </div>
+        <button class="btn-back">Volver</button>
+        <button class="btn">Siguiente Paso</button>
+      </section>
+
+      <section id="paso3" class="quitar">
+        <h2 class="titulo">Terminando</h2>
+        <p class="parrafo">Vuelva a verificar que todo se vea bien antes de confirmar.
+        </p>
+        <span>
+          <div id="recibo">
+            <div class="precio">
+              <p class="titulo">Nombre:</p>
+              <p id="reciboNombre" class="parrafo"></p>
+            </div>
+            <div class="precio">
+              <p class="titulo">Correo Electronico:</p>
+              <p id="reciboCorreo" class="parrafo"></p>
+            </div>
+            <div class="precio">
+              <p class="titulo">Telefono:</p>
+              <p id="reciboTelefono" class="parrafo"></p>
+            </div>
+
+            <div class="precio">
+              <p id="tipoRecibo" class="titulo"></p>
+              <p id="reciboPrecio" class="parrafo">Tipo:</p>
+            </div>
+          </div>
+
+          <p id="parrafo-total" class="parrafo"></p>
+
+          <button class="btn-back">Volver</button>
+          <button class="btn">Confirmar</button>
+          <!-- Step 4 end -->
+      </section>
+
+      <section id="paso4" class="quitar">
+
+        <img src="images/icon-thank-you.svg" alt="logo agradecimiento">
+        <h2 class="titulo">Gracias Por tu Compra!</h2>
+
+        <p class="parrafo">Gracias por confirmar tu subscripcion!</p>
+        <p class="parrafo">Esperamos que te diviertas en nuestra plataforma.</p>
+      </section>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
