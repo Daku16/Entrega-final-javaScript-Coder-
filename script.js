@@ -15,9 +15,19 @@ let botonAnterior = document.getElementsByClassName("btn-back")
 let numero = document.getElementById("numero1")
 let botonPlan = document.getElementById("duracion-btn")
 let opcion = "mes"
+let clientes = []
 botonPlan.addEventListener("change", cambioPlan)
 
 boton()
+
+function boton() {
+    for (const boton of botonSiguiente) {
+        boton.addEventListener("click", pasarPaso)
+    }
+    for (const boton of botonAnterior) {
+        boton.addEventListener("click", devolverPaso)
+    }
+}
 
 function pasarPaso() {
     contenedorPasos.classList.add("quitar")
@@ -33,13 +43,23 @@ function pasarPaso() {
         let nombre = document.getElementById("nombre").value
         let email = document.getElementById("email").value
         let telefono = document.getElementById("telefono").value
+
+        if(nombre === "" || email === "" || telefono === ""){
+            Swal.fire({
+                title: 'Error!',
+                text: 'Por favor rellena los campos para continuar',
+                icon: 'error',
+                confirmButtonText: 'Volver'
+            })
+            devolverPaso()
+        }
         let cliente = new Cliente(nombre, email, telefono, 0)
         let clienteJSON = JSON.stringify(cliente)
-        localStorage.setItem('cliente', clienteJSON)
+        sessionStorage.setItem('cliente', clienteJSON)
     }
-    if (contadorPaso === 3) {
-        recibo()
-    }
+    contadorPaso === 3 && recibo()
+
+    contadorPaso === 4 && anadir()
 }
 function devolverPaso() {
     contenedorPasos.classList.add("quitar")
@@ -51,15 +71,6 @@ function devolverPaso() {
     numero.classList.add("activado")
 }
 
-function boton() {
-    for (const boton of botonSiguiente) {
-        boton.addEventListener("click", pasarPaso)
-    }
-    for (const boton of botonAnterior) {
-        boton.addEventListener("click", devolverPaso)
-    }
-}
-
 function cambioPlan() {
     let arcade = document.getElementById("arcade-precio")
     let avanzado = document.getElementById("avanzado-precio")
@@ -67,60 +78,53 @@ function cambioPlan() {
     let anual = document.getElementById("anual")
     let mensual = document.getElementById("mensual")
 
-    if (botonPlan.checked) {
-        arcade.innerText = "$90/año"
-        avanzado.innerText = "$120/año"
-        pro.innerText = "$150/año"
-        mensual.classList.remove("prendido")
-        anual.classList.add("prendido")
-    }
-    else {
-        arcade.innerText = "$9/mes"
-        avanzado.innerText = "$12/mes"
-        pro.innerText = "$15/mes"
-        anual.classList.remove("prendido")
-        mensual.classList.add("prendido")
-    }
+    botonPlan.checked ? arcade.innerText = "$90/año" : arcade.innerText = "$9/mes"
+    botonPlan.checked ? avanzado.innerText = "$120/año" : avanzado.innerText = "$12/mes"
+    botonPlan.checked ? pro.innerText = "$150/año" : pro.innerText = "$15/mes"
+    botonPlan.checked ? mensual.classList.remove("prendido") : anual.classList.remove("prendido")
+    botonPlan.checked ? anual.classList.add("prendido") : mensual.classList.add("prendido")
 }
-function pasarAnual(precio){
-    if(botonPlan.checked){
+function pasarAnual(precio) {
+    if (botonPlan.checked) {
         opcion = "año"
         return precio * 10
     }
-    else{
+    else {
+        opcion = "mes"
         return precio
-    } 
+    }
 }
 
 function recibo() {
     let planes = document.getElementsByName("plan")
     let tipo = document.getElementById("tipoRecibo")
     let precio = 0
-    let reciboCliente = JSON.parse(localStorage.getItem("cliente"))
+    let reciboCliente = JSON.parse(sessionStorage.getItem("cliente"))
     for (const plan of planes) {
         if (plan.checked) {
-            if(plan.id === "arcade"){
+            if (plan.id === "arcade") {
                 precio = 9
                 reciboCliente.precio = pasarAnual(precio)
                 tipo.innerText = `Arcade (${opcion}):`
             }
-            if(plan.id === "advanced"){
+            if (plan.id === "advanced") {
                 precio = 12
                 reciboCliente.precio = pasarAnual(precio)
                 tipo.innerText = `Avanzado (${opcion}):`
             }
-            if(plan.id === "pro"){
+            if (plan.id === "pro") {
                 precio = 15
                 reciboCliente.precio = pasarAnual(precio)
                 tipo.innerText = `Pro (${opcion}):`
             }
         }
     }
-    
+
     renderRecibo(reciboCliente)
-    let clienteJSON = JSON.stringify(reciboCliente)
-    localStorage.setItem("cliente", clienteJSON)
+    const clienteJSON = JSON.stringify(reciboCliente)
+    sessionStorage.setItem("cliente", clienteJSON)
 }
+
 function renderRecibo(cliente) {
     let nombre = document.getElementById("reciboNombre")
     let correo = document.getElementById("reciboCorreo")
@@ -129,5 +133,13 @@ function renderRecibo(cliente) {
     nombre.innerText = cliente.nombre
     correo.innerText = cliente.correo
     telefono.innerText = cliente.telefono
-    precioParrafo.innerText =` $${cliente.precio}/${opcion}`
+    precioParrafo.innerText = ` $${cliente.precio}/${opcion}`
+}
+
+function anadir() {
+    const cliente = JSON.parse(sessionStorage.getItem('cliente'))
+    clientes.push(cliente)
+    console.log(clientes)
+    const clientesJSON = JSON.stringify(clientes)
+    localStorage.setItem('clientes', clientesJSON)
 }
